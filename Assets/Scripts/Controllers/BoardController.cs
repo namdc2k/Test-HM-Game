@@ -115,10 +115,7 @@ public class BoardController : MonoBehaviour
                     {
                         IsBusy = true;
                         SetSortingLayer(c1, c2);
-                        m_board.Swap(c1, c2, () =>
-                        {
-                            FindMatchesAndCollapse(c1, c2);
-                        });
+                        m_board.Swap(c1, c2, () => { FindMatchesAndCollapse(c1, c2); });
 
                         ResetRayCast();
                     }
@@ -161,10 +158,7 @@ public class BoardController : MonoBehaviour
 
             if (matches.Count < m_gameSettings.MatchesMin)
             {
-                m_board.Swap(cell1, cell2, () =>
-                {
-                    IsBusy = false;
-                });
+                m_board.Swap(cell1, cell2, () => { IsBusy = false; });
             }
             else
             {
@@ -224,7 +218,7 @@ public class BoardController : MonoBehaviour
             matches[i].ExplodeItem();
         }
 
-        if(matches.Count > m_gameSettings.MatchesMin)
+        if (matches.Count > m_gameSettings.MatchesMin)
         {
             m_board.ConvertNormalToBonus(matches, cellEnd);
         }
@@ -298,7 +292,8 @@ public class BoardController : MonoBehaviour
         m_hintIsShown = false;
         foreach (var cell in m_potentialMatch)
         {
-            cell.StopHintAnimation();
+            if (cell)
+                cell.StopHintAnimation();
         }
 
         m_potentialMatch.Clear();

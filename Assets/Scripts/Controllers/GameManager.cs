@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     }
 
     private eStateGame m_state;
+
     public eStateGame State
     {
         get { return m_state; }
@@ -71,7 +73,7 @@ public class GameManager : MonoBehaviour
     {
         State = state;
 
-        if(State == eStateGame.PAUSE)
+        if (State == eStateGame.PAUSE)
         {
             DOTween.PauseAll();
         }
@@ -79,6 +81,35 @@ public class GameManager : MonoBehaviour
         {
             DOTween.PlayAll();
         }
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.RestartGame += RestartGame;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.RestartGame -= RestartGame;
+    }
+
+    private void RestartGame(eLevelMode mode)
+    {
+        StartCoroutine(OnRestartGame(mode));
+    }
+
+    IEnumerator OnRestartGame(eLevelMode mode)
+    {
+        if (m_levelCondition != null)
+        {
+            m_levelCondition.ConditionCompleteEvent -= GameOver;
+            Destroy(m_levelCondition);
+            m_levelCondition = null;
+        }
+
+        ClearLevel();
+        yield return new WaitForEndOfFrame();
+        LoadLevel(mode);
     }
 
     public void LoadLevel(eLevelMode mode)

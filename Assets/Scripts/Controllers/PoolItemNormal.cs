@@ -27,7 +27,7 @@ namespace Controllers{
         public static void DeSpawnItem(GameObject item) {
             item.SetActive(false);
             _instance._poolItems.Enqueue(item);
-            Debug.Log(_instance._poolItems.Count);
+            //Debug.Log(_instance._poolItems.Count);
         }
     }
 }

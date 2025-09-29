@@ -11,6 +11,14 @@ public class UIMainManager : MonoBehaviour
 
     private GameManager m_gameManager;
 
+    private GameManager.eLevelMode _currentLevelMode;
+
+    public GameManager.eLevelMode CurrentLevelMode
+    {
+        get => _currentLevelMode;
+        set => _currentLevelMode = value;
+    }
+
     private void Awake()
     {
         m_menuList = GetComponentsInChildren<IMenu>(true);
@@ -77,14 +85,14 @@ public class UIMainManager : MonoBehaviour
         for (int i = 0; i < m_menuList.Length; i++)
         {
             IMenu menu = m_menuList[i];
-            if(menu is T)
+            if (menu is T)
             {
                 menu.Show();
             }
             else
             {
                 menu.Hide();
-            }            
+            }
         }
     }
 
@@ -107,11 +115,13 @@ public class UIMainManager : MonoBehaviour
     internal void LoadLevelMoves()
     {
         m_gameManager.LoadLevel(GameManager.eLevelMode.MOVES);
+        _currentLevelMode = GameManager.eLevelMode.MOVES;
     }
 
     internal void LoadLevelTimer()
     {
         m_gameManager.LoadLevel(GameManager.eLevelMode.TIMER);
+        _currentLevelMode = GameManager.eLevelMode.TIMER;
     }
 
     internal void ShowGameMenu()
