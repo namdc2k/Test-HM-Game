@@ -18,12 +18,14 @@ public class UIPanelGameOver : MonoBehaviour, IMenu
 
     private void OnRestartGame()
     {
+        //TODO: Task Restart Game
         GameEvents.RestartGame?.Invoke(m_mngr.CurrentLevelMode);
     }
 
     private void OnDestroy()
     {
         if (btnClose) btnClose.onClick.RemoveAllListeners();
+        if (btnRestart) btnRestart.onClick.RemoveAllListeners();
     }
 
     private void OnClickClose()

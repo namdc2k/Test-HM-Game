@@ -4,6 +4,7 @@ using Controllers;
 using UnityEngine;
 
 public class NormalItem : Item{
+    private Board _board;
     public enum eNormalType{
         TYPE_ONE,
         TYPE_TWO,
@@ -16,10 +17,14 @@ public class NormalItem : Item{
 
     public eNormalType ItemType;
 
+    public void SetBoard(Board board)
+    {
+        _board = board;
+    }
+
     public void SetType(eNormalType type) {
         ItemType = type;
     }
-
     public override void SetView() {
         string prefabname = GetPrefabName();
 
@@ -71,6 +76,7 @@ public class NormalItem : Item{
 
     protected override void DestroyView() {
         PoolItemNormal.DeSpawnItem(View.gameObject);
+        _board.RemoveNormalItem(this);
         View = null;
     }
 }
