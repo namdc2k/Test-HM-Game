@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using UnityEngine;
 
-public class NormalItem : Item
-{
-    public enum eNormalType
-    {
+public class NormalItem : Item{
+    public enum eNormalType{
         TYPE_ONE,
         TYPE_TWO,
         TYPE_THREE,
@@ -17,16 +16,27 @@ public class NormalItem : Item
 
     public eNormalType ItemType;
 
-    public void SetType(eNormalType type)
-    {
+    public void SetType(eNormalType type) {
         ItemType = type;
     }
 
-    protected override string GetPrefabName()
-    {
+    public override void SetView() {
+        string prefabname = GetPrefabName();
+
+        if (!string.IsNullOrEmpty(prefabname)) {
+            //GameObject prefab = Resources.Load<GameObject>(prefabname);
+            GameObject prefab = PoolItemNormal.SpawnItem();
+            prefab.name = prefabname;
+            if (prefab) {
+                View = prefab.transform;
+                View.GetComponent<SpriteRenderer>().sprite = DataContainerManager.GetNormalItem((int)ItemType).texture;
+            }
+        }
+    }
+
+    protected override string GetPrefabName() {
         string prefabname = string.Empty;
-        switch (ItemType)
-        {
+        switch (ItemType) {
             case eNormalType.TYPE_ONE:
                 prefabname = Constants.PREFAB_NORMAL_TYPE_ONE;
                 break;
@@ -53,10 +63,14 @@ public class NormalItem : Item
         return prefabname;
     }
 
-    internal override bool IsSameType(Item other)
-    {
+    internal override bool IsSameType(Item other) {
         NormalItem it = other as NormalItem;
 
         return it != null && it.ItemType == this.ItemType;
+    }
+
+    protected override void DestroyView() {
+        PoolItemNormal.DeSpawnItem(View.gameObject);
+        View = null;
     }
 }

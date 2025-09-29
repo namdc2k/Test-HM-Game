@@ -170,4 +170,9 @@ public class BonusItem : Item
         }
 
     }
+
+    protected override void DestroyView() {
+        GameObject.Destroy(View.gameObject);
+        View = null;
+    }
 }

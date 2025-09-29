@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using UnityEngine;
 using DG.Tweening;
 
@@ -9,7 +10,7 @@ public class Item
 {
     public Cell Cell { get; private set; }
 
-    public Transform View { get; private set; }
+    public Transform View { get; protected set; }
 
 
     public virtual void SetView()
@@ -101,11 +102,14 @@ public class Item
             View.DOScale(0.1f, 0.1f).OnComplete(
                 () =>
                 {
-                    GameObject.Destroy(View.gameObject);
-                    View = null;
+                    DestroyView();
                 }
                 );
         }
+    }
+
+    protected virtual void DestroyView() {
+
     }
 
 
@@ -132,7 +136,8 @@ public class Item
 
         if (View)
         {
-            GameObject.Destroy(View.gameObject);
+            //GameObject.Destroy(View.gameObject);
+            PoolItemNormal.DeSpawnItem(View.gameObject);
             View = null;
         }
     }
