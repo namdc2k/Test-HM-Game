@@ -27,7 +27,10 @@ public class Item
         }
     }
 
-    protected virtual string GetPrefabName() { return string.Empty; }
+    protected virtual string GetPrefabName()
+    {
+        return string.Empty;
+    }
 
     public virtual void SetCell(Cell cell)
     {
@@ -53,7 +56,7 @@ public class Item
     {
         if (View)
         {
-            View.SetParent(root);
+            //View.SetParent(root);
         }
     }
 
@@ -78,7 +81,6 @@ public class Item
         {
             sp.sortingOrder = 0;
         }
-
     }
 
     internal void ShowAppearAnimation()
@@ -100,18 +102,14 @@ public class Item
         if (View)
         {
             View.DOScale(0.1f, 0.1f).OnComplete(
-                () =>
-                {
-                    DestroyView();
-                }
-                );
+                () => { DestroyView(); }
+            );
         }
     }
 
-    protected virtual void DestroyView() {
-
+    protected virtual void DestroyView()
+    {
     }
-
 
 
     internal void AnimateForHint()
@@ -136,9 +134,7 @@ public class Item
 
         if (View)
         {
-            //GameObject.Destroy(View.gameObject);
-            PoolItemNormal.DeSpawnItem(View.gameObject);
-            View = null;
+            DestroyView();
         }
     }
 }
