@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Board
 {
@@ -195,8 +196,8 @@ public class Board
             listType[(int)neighbour] = 10000;
         }
 
-        int max = 100000;
-        int cur = 0;
+        int max = 10000;
+        int cur = Random.Range(0, 7);
         for (int i = 0; i < listType.Count; i++)
         {
             if (max > listType[i])
