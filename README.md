@@ -8,3 +8,6 @@
 - Phần Gen new item nên chuyển sang Factory pattern để dễ quản lý, mở rộng.
 - Tối ưu canvas UI nên chia ra nhiều canvas nhỏ và sử dụng atlas texture
 - Áp dụng SOLID trong việc tổ chức code và 1 số pattern phổ biến như Singleton, Observer, StateMachine thay vì switch case
+# phần code thuật toán
+- input và output chưa rõ ràng(ví dụ test1 input: string N với length 1<=N<=10e6...)
+- không được submit task nhiều lần. nên được submit task nhiều lần để có thuật toán chuẩn nhất rồi mới submit tổng cả bài test.
