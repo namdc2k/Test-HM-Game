@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class LevelTime : LevelCondition
     private float m_time;
     private int _displayTime;
     private GameManager m_mngr;
+    private StringBuilder sb = new StringBuilder();
 
     public override void Setup(float value, Text txt, GameManager mngr)
     {
@@ -43,6 +45,15 @@ public class LevelTime : LevelCondition
     {
         if (m_time < 0f) return;
 
-        m_txt.text = string.Format("TIME:\n{0:00}", m_time);
+        sb.Clear();
+        sb.Append("TIME:\n");
+        if (_displayTime >= 60)
+        {
+            sb.Append(_displayTime / 60);
+            sb.Append(":");
+        }
+
+        sb.Append(_displayTime % 60);
+        m_txt.text = sb.ToString();
     }
 }
